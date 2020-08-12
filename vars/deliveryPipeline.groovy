@@ -26,7 +26,7 @@ def call(Map param){
 		}
 		post {
         always {
-            telegramSend 'Hello World'
+            telegramSend(message: 'Hello World', chatId: 676656897)
         }
     }
 	}
