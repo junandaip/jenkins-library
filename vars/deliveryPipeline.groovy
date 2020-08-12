@@ -6,9 +6,6 @@ def call(Map param){
 		agent {
 			label "$agent"
 		}
-		options {
-            ansiColor('xterm')
-        }
 		stages {
 			stage('Build') {
 				steps {
