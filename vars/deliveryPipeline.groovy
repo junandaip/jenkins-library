@@ -7,6 +7,9 @@ def call(Map param){
 				label 'dockerworker'
 			}
 		}
+		options {
+            ansiColor('xterm')
+        }
 		stages {
 			stage('Build') {
 				steps {
