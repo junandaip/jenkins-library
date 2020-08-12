@@ -1,10 +1,12 @@
 #!/usr/bin/env groovy
 
 def call(Map param){
+
+	def agent = 'dockerworker'
 	pipeline {
 		agent {
 			node{
-				label 'dockerworker'
+				label "${agent}"
 			}
 		}
 		options {
