@@ -24,5 +24,10 @@ def call(Map param){
 				}
 			}
 		}
+		post {
+        always {
+            telegramSend 'Hello World'
+        }
+    }
 	}
 }
