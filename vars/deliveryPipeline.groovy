@@ -4,7 +4,7 @@ def call(Map param){
 	pipeline {
 		agent {
 			node{
-				label 'slave2'
+				label 'dockerworker'
 			}
 		}
 		stages {
@@ -21,11 +21,6 @@ def call(Map param){
 					always {
 						junit 'target/surefire-reports/*.xml'
 					}
-				}
-			}
-			stage('Deliver') {
-				steps {
-					sh "sh jenkins/scripts/deliver.sh ${server}"
 				}
 			}
 		}
