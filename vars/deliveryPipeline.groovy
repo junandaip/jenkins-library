@@ -4,7 +4,7 @@ def call(Map param){
 	def agent = 'dockerworker'
 	pipeline {
 		agent {
-			label "$agent"
+			label "dockerworker"
 		}
 		stages {
 			stage('Build') {
