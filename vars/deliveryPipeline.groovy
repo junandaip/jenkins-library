@@ -36,3 +36,4 @@ def getMessage (){
 	def commiter = sh(script: "git show -s --pretty=%cn",returnStdout: true).trim()
 	def message = "$commiter deploying app"
 	return message
+}
