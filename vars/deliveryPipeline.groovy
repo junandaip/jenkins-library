@@ -2,7 +2,6 @@
 
 def call(Map param){
 	def agentName = "dockerworker"
-	def commiter = getCommiter()
 
 	pipeline {
 		agent {
