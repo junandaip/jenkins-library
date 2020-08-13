@@ -8,7 +8,9 @@ def call(Map param){
 		}
 		stages {
 			stage ("telegram notif"){
-				telegramSend "$commiter"
+				steps{
+					telegramSend "$commiter"
+				}
 			}
 			stage('Build') {
 				steps {
