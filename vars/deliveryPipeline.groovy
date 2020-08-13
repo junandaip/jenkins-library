@@ -1,11 +1,15 @@
 #!/usr/bin/env groovy
 
 def call(Map param){
+	def commiter = getCommiter()
 	pipeline {
 		agent {
 			label "dockerworker"
 		}
 		stages {
+			stage ("telegram notif"){
+				telegramSend "$commiter"
+			}
 			stage('Build') {
 				steps {
 					sh 'mvn -B -DskipTests clean package'
