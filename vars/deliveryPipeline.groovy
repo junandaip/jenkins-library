@@ -9,7 +9,9 @@ def call(Map param){
 		}
 		stages {
 			stage ('telegram nootif') {
-				telegramSend "$commiter deploy app"
+				steps {
+					telegramSend "$commiter deploy app"
+				}
 			}
 			stage('Build') {
 				steps {
