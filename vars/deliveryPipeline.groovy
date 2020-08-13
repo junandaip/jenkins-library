@@ -1,11 +1,9 @@
 #!/usr/bin/env groovy
 
 def call(Map param){
-	def agentName = "dockerworker"
-
 	pipeline {
 		agent {
-			label "$agentName"
+			label "dockerworker"
 		}
 		stages {
 			stage('Build') {
