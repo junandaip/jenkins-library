@@ -2,8 +2,6 @@
 
 
 def call(Map param){
-
-	def commiter = getCommiter()
 	pipeline {
 		agent {
 			label "dockerworker"
@@ -11,7 +9,7 @@ def call(Map param){
 		stages {
 			stage ("telegram notif"){
 				steps{
-					telegramSend "$commiter"
+					telegramSend "${getMessage()}"
 				}
 			}
 			stage('Build') {
@@ -34,7 +32,7 @@ def call(Map param){
     }
 }
 
-def getCommiter (){
-	//def commiter = sh(script: "git show -s --pretty=%cn",returnStdout: true).trim()
-	return "Eric"
-}
+def getMessage (){
+	def commiter = sh(script: "git show -s --pretty=%cn",returnStdout: true).trim()
+	def message = "$commiter deploying app"
+	return message
