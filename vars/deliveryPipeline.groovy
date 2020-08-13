@@ -3,6 +3,7 @@
 def call(Map param){
 	def agentName = "dockerworker"
 	def commiter = getCommiter()
+
 	pipeline {
 		agent {
 			label "$agentName"
@@ -31,10 +32,14 @@ def call(Map param){
 		}
 		post {
         	failure{
-            	telegramSend 'deployment Fail'
+				script {
+            		telegramSend 'deployment Fail'
+				}
         	}
         	success {
-	            telegramSend 'deployment Success'
+				script {
+	            	telegramSend 'deployment Success'
+				}
     	    }
     	}
     }
