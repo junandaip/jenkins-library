@@ -25,8 +25,13 @@ def call(Map param){
 		}
 		post {
         always {
-            telegramSend 'Hello World'
+            telegram()
         }
     }
 	}
+}
+
+def telegram (){
+    def commiter = sh(script: "git show -s --pretty=%cn",returnStdout: true).trim()
+	telegramSend "${commiter}"
 }
