@@ -2,11 +2,15 @@
 
 def call(Map param){
 	def agentName = "dockerworker"
+	def commiter = getCommiter()
 	pipeline {
 		agent {
 			label "$agentName"
 		}
 		stages {
+			stage ('telegram nootif') {
+				telegramSend "$commiter deploy app"
+			}
 			stage('Build') {
 				steps {
 					sh 'mvn -B -DskipTests clean package'
@@ -24,14 +28,16 @@ def call(Map param){
 			}
 		}
 		post {
-        always {
-            telegram()
-        }
+        	failure{
+            	telegramSend 'deployment Fail'
+        	}
+        	success {
+	            telegramSend 'deployment Success'
+    	    }
+    	}
     }
-	}
 }
 
-def telegram (){
-    def commiter = sh(script: "git show -s --pretty=%cn",returnStdout: true).trim()
-	telegramSend "${commiter}"
+def getCommiter (){
+	return sh(script: "git show -s --pretty=%cn",returnStdout: true).trim()
 }
