@@ -9,11 +9,6 @@ def call(Map param){
 			label "$agentName"
 		}
 		stages {
-			stage ('telegram nootif') {
-				steps {
-					telegramSend "$commiter deploy app"
-				}
-			}
 			stage('Build') {
 				steps {
 					sh 'mvn -B -DskipTests clean package'
