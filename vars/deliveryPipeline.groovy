@@ -30,5 +30,6 @@ def call(Map param){
 }
 
 def getCommiter (){
-	return sh(script: "git show -s --pretty=%cn",returnStdout: true).trim()
+	def commiter = sh(script: "git show -s --pretty=%cn",returnStdout: true).trim()
+	return commiter
 }
