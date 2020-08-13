@@ -1,6 +1,8 @@
 #!/usr/bin/env groovy
 
+
 def call(Map param){
+
 	def commiter = getCommiter()
 	pipeline {
 		agent {
@@ -33,6 +35,6 @@ def call(Map param){
 }
 
 def getCommiter (){
-	def commiter = sh(script: "git show -s --pretty=%cn",returnStdout: true).trim()
-	return commiter
+	//def commiter = sh(script: "git show -s --pretty=%cn",returnStdout: true).trim()
+	return "Eric"
 }
