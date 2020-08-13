@@ -25,18 +25,7 @@ def call(Map param){
 				}
 			}
 		}
-		post {
-        	failure{
-				script {
-            		telegramSend 'deployment Fail'
-				}
-        	}
-        	success {
-				script {
-	            	telegramSend 'deployment Success'
-				}
-    	    }
-    	}
+
     }
 }
 
