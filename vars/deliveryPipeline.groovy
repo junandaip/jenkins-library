@@ -1,23 +1,23 @@
 #!/usr/bin/env groovy
 
-
 def call(Map param){
 	pipeline {
-		agent {
-			label "dockerworker"
-		}
+		agent "${param.agentName}"
 		stages {
-			stage ("telegram notif"){
+			stage ("Build VM-APP") {
+
+			}
+			stage ("telegram notif") {
 				steps{
 					echo "${getMessage()} ${param.text}"
 				}
 			}
-			stage('Build') {
+			stage('Build VM-APP') {
 				steps {
 					sh 'mvn -B -DskipTests clean package'
 				}
 			}
-			stage('Test') {
+			stage('Test VM-APP') {
 				steps {
 					sh 'mvn test'
 				}
@@ -28,7 +28,6 @@ def call(Map param){
 				}
 			}
 		}
-
     }
 }
 
