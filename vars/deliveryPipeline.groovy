@@ -4,23 +4,16 @@ def call(Map param){
 	pipeline {
 		agent {
 			label "${param.agentName}"
-			// label "masterworker"
 		}
 		stages {
 			stage ("Build VM-APP") {
-
-			}
-			stage ("telegram notif") {
-				steps{
-					echo "${getMessage()} ${param.text}"
-				}
-			}
-			stage('Build VM-APP') {
+				when { expression { return "${param.agentName}" == 'masterworker'} }
 				steps {
 					sh 'mvn -B -DskipTests clean package'
 				}
 			}
-			stage('Test VM-APP') {
+			stage ("Test VM-APP") {
+				when { expression { return "${param.agentName}" == 'masterworker'} }
 				steps {
 					sh 'mvn test'
 				}
@@ -30,12 +23,46 @@ def call(Map param){
 					}
 				}
 			}
+			stage('Run VM-APP') {
+				when { expression { return "${param.agentName}" == 'masterworker'} }
+				steps {
+					sh 'java -jar target/*.jar'
+				}
+			}
+			stage('Build DOCKER-APP') {
+				when { expression { return "${param.agentName}" == 'dockerworker'} }
+				steps {
+					sh 'mvn -B -DskipTests clean package'
+				}
+			}
+			stage('Test DOCKER-APP') {
+				when { expression { return "${param.agentName}" == 'dockerworker'} }
+				steps {
+					sh 'mvn test'
+				}
+				post {
+					always {
+						junit 'target/surefire-reports/*.xml'
+					}
+				}
+			}
+			stage('Build image for DOCKER-APP') {
+				when { expression { return "${param.agentName}" == 'dockerworker'} }
+				steps {
+					sh 'docker build -t my-docker-app .'
+				}
+			}
+			stage('Run app DOCKER-APP') {
+				when { expression { return "${param.agentName}" == 'dockerworker'} }
+				steps {
+					sh 'docker run -p 8080:8181 my-docker-app'
+				}
+			}
 		}
+		post {
+			always {
+				deleteDir()
+			}
+    	}
     }
-}
-
-def getMessage (){
-	def commiter = sh(script: "git show -s --pretty=%cn",returnStdout: true).trim()
-	def message = "$commiter deploying app"
-	return message
 }
