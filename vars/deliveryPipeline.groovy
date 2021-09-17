@@ -9,7 +9,7 @@ def call(Map param){
 		stages {
 			stage ("telegram notif"){
 				steps{
-					telegramSend "${getMessage()}"
+					echo "${getMessage()}"
 				}
 			}
 			stage('Build') {
