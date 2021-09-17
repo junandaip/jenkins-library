@@ -2,9 +2,7 @@
 
 def call(Map param){
 	pipeline {
-		agent {
-			label "${param.agentName}"
-		}
+		agent masterworker
 		stages {
 			stage ("Build VM-APP") {
 
