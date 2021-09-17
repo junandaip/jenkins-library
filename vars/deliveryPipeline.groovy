@@ -3,8 +3,8 @@
 def call(Map param){
 	pipeline {
 		agent {
-			// label "${param.agentName}"
-			label "masterworker"
+			label "${param.agentName}"
+			// label "masterworker"
 		}
 		stages {
 			stage ("Build VM-APP") {
